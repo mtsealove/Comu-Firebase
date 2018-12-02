@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--언어 챕터 저장-->
+    <string-array name="java_chapter">
+        <item>자바를 공부하고 싶어요</item>
+        <item>나만의 프로그램을 만들어보자</item>
+        <item>변하는 수 변수!</item>
+        <item>문자를 입력받아요</item>
+        <item>조건을 걸자 if-else</item>
+        <item>조건을 걸자 switch</item>
+        <item>몇 번 반복할까? for</item>
+        <item>일단 반복해보자 while</item>
+        <item>배열을 이용해보자</item>
+        <item>클래스가 뭐야? 먹는거야</item>
+        <item>인스턴스를 활용하자</item>
+        <item>생성자에 관하여</item>
+    </string-array>
+
+    <string-array name="cplus">
+        <item>variable</item>
+        <item>if-else</item>
+        <item>for</item>
+        <item>while</item>
+        <item>switch</item>
+        <item>class</item>
+        <item>array</item>
+        <item>class</item>
+        <item>intance</item>
+        <item>constructor</item>
+        <item>intanceof</item>
+    </string-array>
+
+    <string-array name="c">
+        <item>variable</item>
+        <item>if-else</item>
+        <item>for</item>
+        <item>while</item>
+        <item>switch</item>
+        <item>array</item>
+        <item>pointer</item>
+    </string-array>
+
+</resources>

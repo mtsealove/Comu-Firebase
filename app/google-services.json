@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1083249038668",
+    "firebase_url": "https://comu-98842.firebaseio.com",
+    "project_id": "comu-98842",
+    "storage_bucket": "comu-98842.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083249038668:android:5c7fc0a25e35c879",
+        "android_client_info": {
+          "package_name": "kr.ac.gachon.www.comu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083249038668-l3cqfkrr1e7c2otpnn05dkrv6k64c4la.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.ac.gachon.www.comu",
+            "certificate_hash": "9749e12d75f4861b5bb339adf037c21ae9c06045"
+          }
+        },
+        {
+          "client_id": "1083249038668-m0jokl10fu0a2arkd7cnauk619mk4do2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbK9XMbQxlRIwn8I0Tjorg3GpZmfURIiU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083249038668-m0jokl10fu0a2arkd7cnauk619mk4do2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

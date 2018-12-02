@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tmp_background"
+    >
+
+    <ImageView
+        android:layout_width="360dp"
+        android:layout_height="394dp"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="-100dp"
+        android:src="@drawable/man" />
+
+    <ImageView
+        android:layout_width="360dp"
+        android:layout_height="394dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="-100dp"
+        android:src="@drawable/man" />
+
+    <RelativeLayout
+        android:id="@+id/script"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/conversation">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="이름"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="-10dp"
+            android:text="대화내용"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/go_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="코드 작성"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:background="#CC848484"
+        android:layout_gravity="right"
+        android:onClick="go_Edit"/>
+
+
+</FrameLayout>

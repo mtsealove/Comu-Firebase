@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/load_background">
+
+    <!--로고-->
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="코딩이랑 무관한 게임"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!--게임 플레이 레이아웃-->
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/play"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:id="@+id/select_lang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="언어 선택"
+                android:textSize="35sp"
+                android:textColor="#FFFFFF"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/select_lang"
+                android:layout_marginTop="5dp"
+                android:text="나의 레벨: 도사"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/java"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CC868585"
+            android:text="JAVA"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/cplus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#CC868585"
+            android:text="C++"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#CC868585"
+            android:text="C"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <!--비회원 소셜화면-->
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:id="@+id/friends_not_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인한 사용자만\n사용 가능합니다"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:onClick="logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인하러 가기"
+            android:background="#CC868585"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:padding="4dp"/>
+    </LinearLayout>
+
+    <!--회원 소셜화면-->
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/friends_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/free_board"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CC868585"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:text="자유게시판"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/code_share_board"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CC868585"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:text="코드 공유 게시판"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/friends_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CC868585"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:text="친구 목록"/>
+    </LinearLayout>
+
+    <!--공지사항 레이아웃-->
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/notice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/et_background"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="80dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:id="@+id/notice_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!--내 정보 레이아웃-->
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="100dp"
+        android:id="@+id/my_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:background="#CC868585"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름: 이름"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/ID"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID: ID"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/level_info"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="레벨: 0LV"
+            android:textSize="24sp"/>
+
+        <ScrollView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/clear_chapter"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="클리어 챕터한 챕터가 없습니다"
+                android:textSize="24sp"/>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+    <!--설정 레이아웃-->
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/setting"
+        android:layout_marginHorizontal="30dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/logout"
+            android:onClick="logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그아웃"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:background="#FF0000"/>
+    </LinearLayout>
+
+    <!--하단 버튼 레이아웃-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:onClick="set_notice"
+            android:id="@+id/notice_btn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_button"
+            android:text="공지"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/friend_btn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_button"
+            android:onClick="set_friends"
+            android:text="소셜"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:onClick="set_play"
+            android:id="@+id/play_btn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_button"
+            android:text="플레이"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:onClick="set_info"
+            android:id="@+id/info_btn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_button"
+            android:text="내 정보"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:onClick="set_setting"
+            android:id="@+id/setting_btn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_button"
+            android:text="설정"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </LinearLayout>
+</FrameLayout>
