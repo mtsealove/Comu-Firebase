@@ -41,9 +41,9 @@ public class Member extends AppCompatActivity {
         setContentView(R.layout.activity_member);
 
         //각 버튼 매칭
-        Button login = (Button) findViewById(R.id.login);
-        Button non_member = (Button) findViewById(R.id.non_member);
-        Button register = (Button) findViewById(R.id.register);
+        Button login = findViewById(R.id.login);
+        Button non_member = findViewById(R.id.non_member);
+        Button register = findViewById(R.id.register);
 
         non_member.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +75,10 @@ public class Member extends AppCompatActivity {
         View layout = inflater.inflate(R.layout.dialog_login, null);
         builder.setView(layout);
         //다이얼로그 안의 객체 매칭
-        final EditText input_id = (EditText) layout.findViewById(R.id.input_id);
-        final EditText input_password = (EditText) layout.findViewById(R.id.input_password);
-        final CheckBox keep_login = (CheckBox) layout.findViewById(R.id.keep_login);
-        Button confirm = (Button) layout.findViewById(R.id.confirm);
+        final EditText input_id = layout.findViewById(R.id.input_id);
+        final EditText input_password = layout.findViewById(R.id.input_password);
+        final CheckBox keep_login = layout.findViewById(R.id.keep_login);
+        Button confirm = layout.findViewById(R.id.confirm);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,48 +98,50 @@ public class Member extends AppCompatActivity {
                     ref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot snapshot: dataSnapshot.child("Account").getChildren()) {
-                                if(id.equals(snapshot.child("ID").getValue().toString())&&password.equals(snapshot.child("password").getValue().toString())) {
-                                    String name=snapshot.child("name").getValue().toString();
-                                    String phone=snapshot.child("phone").getValue().toString();
-                                    int level=Integer.parseInt(snapshot.child("level").getValue().toString());
-                                    int exp=Integer.parseInt(snapshot.child("exp").getValue().toString());
-                                    String fc=snapshot.child("fc").getValue().toString();
-                                    String friends_split=snapshot.child("friends_split").getValue().toString();
-                                    Load.account=new Account(name, id, phone, password, level, exp, fc, friends_split);
 
-                                    if (keep_login.isChecked()) { //로그인 유지 체크시 로컬에 ID와 패트워드 저장
-                                        File Logined = new File(getFilesDir() + "logined.dat");
-                                        try {
-                                            BufferedWriter bw = new BufferedWriter(new FileWriter(Logined));
-                                            bw.write(id);
-                                            bw.newLine();
-                                            bw.write(password);
-                                            bw.flush();
-                                            bw.close();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
+                                    if(!dataSnapshot.child("Account").child(id).exists())
+                                        Toast.makeText(Member.this, "ID가 존재하지 않습니다", Toast.LENGTH_SHORT).show();
+                                    else if (dataSnapshot.child("Account").child(id).child("password").getValue().toString().equals(password)) {
+                                        String name = dataSnapshot.child("Account").child(id).child("name").getValue().toString();
+                                        String phone = dataSnapshot.child("Account").child(id).child("phone").getValue().toString();
+                                        int level = Integer.parseInt(dataSnapshot.child("Account").child(id).child("level").getValue().toString());
+                                        int exp = Integer.parseInt(dataSnapshot.child("Account").child(id).child("exp").getValue().toString());
+                                        String fc = dataSnapshot.child("Account").child(id).child("fc").getValue().toString();
+                                        String friends_split = dataSnapshot.child("Account").child(id).child("friends_split").getValue().toString();
+                                        Load.account = new Account(name, id, phone, password, level, exp, fc, friends_split);
+
+                                        if (keep_login.isChecked()) { //로그인 유지 체크시 로컬에 ID와 패트워드 저장
+                                            File Logined = new File(getFilesDir() + "logined.dat");
+                                            try {
+                                                BufferedWriter bw = new BufferedWriter(new FileWriter(Logined));
+                                                bw.write(id);
+                                                bw.newLine();
+                                                bw.write(password);
+                                                bw.flush();
+                                                bw.close();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            } catch (NullPointerException e) {
+
+                                            }
                                         }
-                                    }
-                                    Intent intent=new Intent(Member.this, Main.class);
-                                    startActivity(intent);
+                                        Intent intent = new Intent(Member.this, Main.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else if (!dataSnapshot.child("Account").child(id).child("password").getValue().toString().equals(password))
+                                        Toast.makeText(Member.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            if (Load.account==null) {
+                                Toast.makeText(getApplicationContext(), "로그인 시도 횟수: " + (++login_count) + "회", Toast.LENGTH_SHORT).show();
+                                if (login_count == 10) { //로그인 10회 실패시
+                                    certification();
                                 }
-
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
-
-                    if (Load.account==null) {
-                        Toast.makeText(getApplicationContext(), "ID/비밀번호가 다릅니다\n로그인 시도 횟수: " + (++login_count) + "회", Toast.LENGTH_SHORT).show();
-                        if (login_count == 10) { //로그인 10회 실패시
-                           certification();
-                        }
-                    }
                 }
             }
         });
@@ -156,10 +158,10 @@ public class Member extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(Member.this);
         builder.setView(layout)
                 .setCancelable(false); //임의 종료 방지
-        final EditText phone = (EditText) layout.findViewById(R.id.certification_phone);
-        final EditText name=(EditText)layout.findViewById(R.id.certification_name);
+        final EditText phone = layout.findViewById(R.id.certification_phone);
+        final EditText name= layout.findViewById(R.id.certification_name);
         phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        Button confirm = (Button) layout.findViewById(R.id.confirm_certification);
+        Button confirm = layout.findViewById(R.id.confirm_certification);
 
         final AlertDialog cdialog = builder.create();
         cdialog.show();

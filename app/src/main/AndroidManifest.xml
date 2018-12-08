@@ -25,6 +25,7 @@
         <activity android:name=".comu.Story"/>
         <activity android:name=".comu.Editor"/>
         <activity android:name=".comu.Free_board"/>
+        <activity android:name=".comu.Show_code"/>
     </application>
 
 </manifest>

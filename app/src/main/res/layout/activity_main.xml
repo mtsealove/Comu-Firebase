@@ -2,16 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/load_background">
+    android:background="@drawable/background">
 
     <!--로고-->
     <LinearLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#CC868585"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,7 +24,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="코딩이랑 무관한 게임"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -282,12 +285,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:onClick="set_notice"
             android:id="@+id/notice_btn"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/menu_button"
+            android:background="@drawable/btns"
+            android:onClick="set_notice"
             android:text="공지"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -297,41 +300,41 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/menu_button"
+            android:background="@drawable/btns"
             android:onClick="set_friends"
             android:text="소셜"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
         <Button
-            android:onClick="set_play"
             android:id="@+id/play_btn"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/menu_button"
+            android:background="@drawable/btns"
+            android:onClick="set_play"
             android:text="플레이"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
         <Button
-            android:onClick="set_info"
             android:id="@+id/info_btn"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/menu_button"
+            android:background="@drawable/btns"
+            android:onClick="set_info"
             android:text="내 정보"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
         <Button
-            android:onClick="set_setting"
             android:id="@+id/setting_btn"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/menu_button"
+            android:background="@drawable/btns"
+            android:onClick="set_setting"
             android:text="설정"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />

@@ -5,19 +5,26 @@
     android:background="@drawable/tmp_background"
     >
 
-    <ImageView
-        android:layout_width="360dp"
-        android:layout_height="394dp"
-        android:layout_gravity="bottom|left"
-        android:layout_marginLeft="-100dp"
-        android:src="@drawable/man" />
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom"
+       android:layout_marginBottom="80dp">
 
-    <ImageView
-        android:layout_width="360dp"
-        android:layout_height="394dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="-100dp"
-        android:src="@drawable/man" />
+       <ImageView
+           android:layout_width="180dp"
+           android:layout_height="300dp"
+           android:layout_alignParentStart="true"
+           android:layout_alignParentTop="true"
+           android:src="@drawable/comu_eagle" />
+
+       <ImageView
+           android:layout_width="180dp"
+           android:layout_height="300dp"
+           android:layout_alignParentRight="true"
+           android:layout_alignParentTop="true"
+           android:src="@drawable/comu_sheep" />
+   </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/script"
@@ -49,16 +56,13 @@
             />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/go_edit"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/selectBtns"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="코드 작성"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:background="#CC848484"
-        android:layout_gravity="right"
-        android:onClick="go_Edit"/>
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
 
+    </LinearLayout>
 
 </FrameLayout>

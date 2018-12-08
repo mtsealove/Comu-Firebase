@@ -3,8 +3,10 @@ package kr.ac.gachon.www.comu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,83 +18,113 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import kr.ac.gachon.www.R;
 
 public class Story extends AppCompatActivity {
+    ArrayList<Conversation> conversations=new ArrayList<>();
+    FirebaseDatabase database=FirebaseDatabase.getInstance();
+    int script_count=0; //대화의 개수
+    TextView name, comment;
     @Override
     protected void onCreate(Bundle si) {
         super.onCreate(si);
         setContentView(R.layout.activity_story);
-        final int max_script=1000;
-        final Conversation[] conversations=new Conversation[max_script];
-        int script_count=0; //대화의 개수
+        DatabaseReference ref=database.getReference();
+        Intent intent=getIntent();
+        final String lang=intent.getStringExtra("lang");
+        final String title=intent.getStringExtra("title");
 
-        String file_name="java_variable.dat";
-        try {
-            BufferedReader br=new BufferedReader(new InputStreamReader(getAssets().open(file_name)));
-            String tmp="";
-            String character, comment;
-            while((tmp=br.readLine())!=null) {
-                character=tmp;
-                tmp=br.readLine();
-                comment=tmp;
-                conversations[script_count]=new Conversation(character, comment);
-                script_count++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //대화 내용 설정
-        final TextView name = (TextView) findViewById(R.id.name);
-        final TextView comment = (TextView) findViewById(R.id.comment);
-        name.setText(conversations[0].character);
-        comment.setText(conversations[0].comment);
 
-        //대화 터치시 다음 대화로 이동
-        final int[] ing = {1};
-        final Bundle final_si=si;
-        RelativeLayout script=(RelativeLayout)findViewById(R.id.script);
-        script.setOnClickListener(new View.OnClickListener() {
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.child("Conversation").child(lang).getChildren()) {
+                    if(snapshot.child("title").getValue(String.class).equals(title)) {
+                        for(DataSnapshot snapshot1: snapshot.getChildren()) {
+                            String character=snapshot1.child("character").getValue(String.class);
+                            String comment=snapshot1.child("comment").getValue(String.class);
+                            try {
+                                String code=snapshot1.child("code").getValue(String.class);
+                                conversations.add(new Conversation(character, comment, code));
+                            } catch (NullPointerException e) {
+                                conversations.add(new Conversation(character, comment));
+                            }
 
-                try {
-                    name.setText(conversations[ing[0]].character);
-                    comment.setText(conversations[ing[0]].comment);
-                    ing[0]++;
-                } catch (NullPointerException e) {
-                    Toast.makeText(Story.this, "대화가 종료되었습니다", Toast.LENGTH_SHORT).show();
-                    Intent intent=getIntent();
-                    String chapter=intent.getStringExtra("chapter");
-                    Load.account.exp+=10;
-                    boolean already_exist=false;
-                    for(int i=0; i<Load.account.finished_chapeter.length; i++) //이미 했는지 확인
-                        if(chapter.equals(Load.account.finished_chapeter[i])) already_exist=true;
-                    if(!already_exist) //존재하지 않으면 추가
-                        Load.account.fc+=chapter+",";
-                    Load.account.re_split_chapter();
-                    update_db();
-                    if(Load.account.exp>=100) {
-                        Load.account.exp-=100;
-                        Load.account.level++;
-                        update_db();
+                        }
                     }
-                    finish();
                 }
+                conversations.remove(conversations.size()-1);
+                //대화 내용 설정
+                name = findViewById(R.id.name);
+                comment = findViewById(R.id.comment);
+                name.setText(conversations.get(0).character);
+                comment.setText(conversations.get(0).comment);
+
+                //대화 터치시 다음 대화로 이동
+                RelativeLayout script= findViewById(R.id.script);
+                script.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getNextChapter();
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
+
+
 
     }
     public void go_Edit(View v) {
         Intent editor=new Intent(Story.this, Editor.class);
         startActivity(editor);
+    }
+    private void getNextChapter() {
+        try {
+            name.setText(conversations.get(script_count).character);
+            comment.setText(conversations.get(script_count).comment);
+            if(conversations.get(script_count).code!=null) {
+                showCode();
+            }
+            ++script_count;
+        } catch (IndexOutOfBoundsException e) {
+            Toast.makeText(Story.this, "대화가 종료되었습니다", Toast.LENGTH_SHORT).show();
+            Intent intent=getIntent();
+            String chapter=intent.getStringExtra("chapter");
+
+            if(Load.account!=null) {
+                Load.account.exp += 10;
+                boolean already_exist = false;
+                for (int i = 0; i < Load.account.finished_chapeter.length; i++) //이미 했는지 확인
+                    if (chapter.equals(Load.account.finished_chapeter[i]))
+                        already_exist = true;
+                if (!already_exist) //존재하지 않으면 추가
+                    Load.account.fc += chapter + ",";
+                Load.account.re_split_chapter();
+                update_db();
+                if (Load.account.exp >= 100) {
+                    Load.account.exp -= 100;
+                    Load.account.level++;
+                    update_db();
+                }
+            }
+            finish();
+        }
+    }
+
+    private void showCode() {
+        if(conversations.get(script_count).code!=null) {
+            Intent intent=new Intent(Story.this, Show_code.class);
+            intent.putExtra("code", conversations.get(script_count).code);
+            startActivity(intent);
+        }
     }
 
     int current_account=0;
@@ -116,9 +148,9 @@ public class Story extends AppCompatActivity {
 
             }
         });
-        ref.child("Account").child(Integer.toString(current_account)).child("fc").setValue(Load.account.fc);
-        ref.child("Account").child(Integer.toString(current_account)).child("exp").setValue(Load.account.exp);
-        ref.child("Account").child(Integer.toString(current_account)).child("level").setValue(Load.account.level);
+        ref.child("Account").child(Load.account.ID).child("fc").setValue(Load.account.fc);
+        ref.child("Account").child(Load.account.ID).child("exp").setValue(Load.account.exp);
+        ref.child("Account").child(Load.account.ID).child("level").setValue(Load.account.level);
     }
 
 

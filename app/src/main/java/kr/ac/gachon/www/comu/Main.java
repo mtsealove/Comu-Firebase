@@ -30,7 +30,7 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent=getIntent();
 
-        TextView level=(TextView)findViewById(R.id.level);
+        TextView level= findViewById(R.id.level);
         if(Load.account!=null) {//비회원이 아니라면 환영 토스트 출력
             Toast.makeText(Main.this, Load.account.name+"님 환영합니다", Toast.LENGTH_SHORT).show();
             display_level();
@@ -39,9 +39,9 @@ public class Main extends AppCompatActivity {
 
 
         //플레이 기능|챕터 선택으로 이동
-        Button c=(Button)findViewById(R.id.c);
-        Button java=(Button)findViewById(R.id.java);
-        Button cplus=(Button)findViewById(R.id.cplus);
+        Button c= findViewById(R.id.c);
+        Button java= findViewById(R.id.java);
+        Button cplus= findViewById(R.id.cplus);
 
         c.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,16 +62,16 @@ public class Main extends AppCompatActivity {
             }
         });
         //하단 버튼들 매칭
-        play_btn=(Button)findViewById(R.id.play_btn);
-        friends_btn=(Button)findViewById(R.id.friend_btn);
-        notice_btn=(Button)findViewById(R.id.notice_btn);
-        setting_btn=(Button)findViewById(R.id.setting_btn);
-        info_btn=(Button)findViewById(R.id.info_btn);
+        play_btn= findViewById(R.id.play_btn);
+        friends_btn= findViewById(R.id.friend_btn);
+        notice_btn= findViewById(R.id.notice_btn);
+        setting_btn= findViewById(R.id.setting_btn);
+        info_btn= findViewById(R.id.info_btn);
 
-        play_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button_focus));
+        play_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns_focus));
     }
     public void display_level() { //정수로 표현된 레벨을 String으로 표시
-        TextView level=(TextView)findViewById(R.id.level);
+        TextView level= findViewById(R.id.level);
         String string_level="나의 레벨: ";
         if(Load.account!=null) {
             int int_level = Load.account.level;
@@ -95,19 +95,19 @@ public class Main extends AppCompatActivity {
 
     private void hide_layout() { //레이아웃 숨김 메서드
         //버튼 포커스 해제
-        play_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button));
-        friends_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button));
-        notice_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button));
-        setting_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button));
-        info_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button));
+        play_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns));
+        friends_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns));
+        notice_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns));
+        setting_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns));
+        info_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns));
 
         //레이아웃 매칭
-        LinearLayout play=(LinearLayout)findViewById(R.id.play);
-        LinearLayout setting=(LinearLayout)findViewById(R.id.setting);
-        LinearLayout friends_not_login=(LinearLayout)findViewById(R.id.friends_not_login);
-        LinearLayout friends_login=(LinearLayout)findViewById(R.id.friends_login);
-        LinearLayout notice=(LinearLayout)findViewById(R.id.notice);
-        LinearLayout info=(LinearLayout)findViewById(R.id.my_info);
+        LinearLayout play= findViewById(R.id.play);
+        LinearLayout setting= findViewById(R.id.setting);
+        LinearLayout friends_not_login= findViewById(R.id.friends_not_login);
+        LinearLayout friends_login= findViewById(R.id.friends_login);
+        LinearLayout notice= findViewById(R.id.notice);
+        LinearLayout info= findViewById(R.id.my_info);
         //레이아웃 소멸
         play.setVisibility(View.GONE);
         setting.setVisibility(View.GONE);
@@ -119,39 +119,39 @@ public class Main extends AppCompatActivity {
 
     public void set_play(View v) {
         hide_layout();
-        LinearLayout layout=(LinearLayout)findViewById(R.id.play);
+        LinearLayout layout= findViewById(R.id.play);
         layout.setVisibility(View.VISIBLE);
-        play_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button_focus));
+        play_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns_focus));
     }
 
     public void set_friends(View v) {
         hide_layout();
-        friends_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button_focus));
+        friends_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns_focus));
         LinearLayout layout;
         //로그인 여부에 따라 다른 화면 설정
-        if(Load.account==null) layout=(LinearLayout)findViewById(R.id.friends_not_login);
+        if(Load.account==null) layout= findViewById(R.id.friends_not_login);
         else{
-            layout=(LinearLayout)findViewById(R.id.friends_login);
+            layout= findViewById(R.id.friends_login);
 
-            Button friends_list_btn=(Button)findViewById(R.id.friends_list);
+            Button friends_list_btn= findViewById(R.id.friends_list);
             friends_list_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     LayoutInflater inflater=getLayoutInflater();
                     View dialog_layout=inflater.inflate(R.layout.dialog_friends, null);
-                    LinearLayout friends_list=(LinearLayout)dialog_layout.findViewById(R.id.friends_list);
+                    LinearLayout friends_list= dialog_layout.findViewById(R.id.friends_list);
 
                     View[] list=new View[Load.account.friends.length];
                     TextView[] name=new TextView[Load.account.friends.length];
                     if(Load.account.friends[0].length()!=0)
                         for(int i=0; i<Load.account.friends.length; i++) {
                             list[i]=inflater.inflate(R.layout.sub_friends, null);
-                            name[i]=(TextView)list[i].findViewById(R.id.name);
+                            name[i]= list[i].findViewById(R.id.name);
                             name[i].setText(Load.account.friends[i]);
                             friends_list.addView(list[i]);
                         }
                     else {
-                        TextView no_friends=(TextView)friends_list.findViewById(R.id.no_friends);
+                        TextView no_friends= friends_list.findViewById(R.id.no_friends);
                         no_friends.setVisibility(View.VISIBLE);
                     }
                     AlertDialog.Builder builder=new AlertDialog.Builder(Main.this);
@@ -163,7 +163,7 @@ public class Main extends AppCompatActivity {
         }
         layout.setVisibility(View.VISIBLE);
 
-        Button free_board=(Button)findViewById(R.id.free_board);
+        Button free_board= findViewById(R.id.free_board);
         free_board.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,12 +176,12 @@ public class Main extends AppCompatActivity {
     static boolean notice_showed=false; //공지사항을 한번만 읽어오게 설정
     public void set_notice(View v) { //공지사항
         hide_layout();
-        notice_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button_focus));
-        LinearLayout layout=(LinearLayout)findViewById(R.id.notice);
+        notice_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns_focus));
+        LinearLayout layout= findViewById(R.id.notice);
         layout.setVisibility(View.VISIBLE);
         //파일에서 공지 읽어오기
         if(!notice_showed) {
-            LinearLayout notice_list = (LinearLayout) findViewById(R.id.notice_list);
+            LinearLayout notice_list = findViewById(R.id.notice_list);
             LayoutInflater inflater = getLayoutInflater();
             View[] list = new View[100];
             TextView[] listtv = new TextView[100];
@@ -193,7 +193,7 @@ public class Main extends AppCompatActivity {
                 while ((tmp = br.readLine()) != null) {
                     notices[i] = tmp;
                     list[i] = inflater.inflate(R.layout.sub_chapter_list, null);
-                    listtv[i] = (TextView) list[i].findViewById(R.id.name);
+                    listtv[i] = list[i].findViewById(R.id.name);
                     listtv[i].setText(notices[i]);
                     notice_list.addView(list[i]);
                 }
@@ -206,14 +206,14 @@ public class Main extends AppCompatActivity {
 
     public void set_info(View v) { //정보 표시 레이아웃
         hide_layout();
-        info_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button_focus));
-        LinearLayout layout=(LinearLayout)findViewById(R.id.my_info);
+        info_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns_focus));
+        LinearLayout layout= findViewById(R.id.my_info);
         layout.setVisibility(View.VISIBLE);
         //정보 설정
-        TextView name=(TextView)findViewById(R.id.name);
-        TextView ID=(TextView)findViewById(R.id.ID);
-        TextView lv=(TextView)findViewById(R.id.level_info);
-        TextView cleared_chapter=(TextView)findViewById(R.id.clear_chapter);
+        TextView name= findViewById(R.id.name);
+        TextView ID= findViewById(R.id.ID);
+        TextView lv= findViewById(R.id.level_info);
+        TextView cleared_chapter= findViewById(R.id.clear_chapter);
         if(Load.account!=null) {
             name.setText("이름: " + Load.account.name);
             ID.setText("ID: " + Load.account.ID);
@@ -233,11 +233,11 @@ public class Main extends AppCompatActivity {
 
     public void set_setting(View v) {
         hide_layout();
-        LinearLayout layout=(LinearLayout)findViewById(R.id.setting);
+        LinearLayout layout= findViewById(R.id.setting);
         layout.setVisibility(View.VISIBLE);
-        Button logout=(Button)findViewById(R.id.logout);
+        Button logout= findViewById(R.id.logout);
         if(Load.account==null) logout.setText("로그인 화면으로 이동");
-        setting_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.menu_button_focus));
+        setting_btn.setBackground(ContextCompat.getDrawable(Main.this, R.drawable.btns_focus));
     }
 
 

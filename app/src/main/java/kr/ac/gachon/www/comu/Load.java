@@ -66,7 +66,7 @@ public class Load extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot snapshot: dataSnapshot.child("Account").getChildren()) { //일치하는 계정을 찾으면 데이터 가져오기
-                            if(snapshot.child("ID").getValue().equals(ID)&&snapshot.child("password").getValue().equals(password)) {
+                            if(snapshot.child(ID).child("password").getValue().equals(password)) {
                                 String name=snapshot.child("name").getValue().toString();
                                 String phone=snapshot.child("phone").getValue().toString();
                                 int level=Integer.parseInt(snapshot.child("level").getValue().toString());
@@ -77,7 +77,6 @@ public class Load extends AppCompatActivity {
                             }
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 

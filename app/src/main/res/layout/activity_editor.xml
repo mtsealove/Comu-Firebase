@@ -33,13 +33,13 @@
 
 
     <EditText
-        android:gravity="top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:background="@drawable/et_background"
-        android:textColor="#FFFFFF"
+        android:gravity="top"
         android:inputType="textLongMessage"
-        android:layout_margin="20dp"/>
+        android:textColor="#FFFFFF" />
 
 
 </LinearLayout>

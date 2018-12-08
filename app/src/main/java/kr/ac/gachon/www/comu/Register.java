@@ -41,11 +41,11 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle si) {
         super.onCreate(si);
         setContentView(R.layout.activity_register);
-        name=(EditText)findViewById(R.id.input_name);
-        id=(EditText)findViewById(R.id.input_id);
-        password=(EditText)findViewById(R.id.input_password);
-        password_confirm=(EditText)findViewById(R.id.input_password_confirm);
-        phone=(EditText)findViewById(R.id.input_phone);
+        name= findViewById(R.id.input_name);
+        id= findViewById(R.id.input_id);
+        password= findViewById(R.id.input_password);
+        password_confirm= findViewById(R.id.input_password_confirm);
+        phone= findViewById(R.id.input_phone);
 
         phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -70,7 +70,7 @@ public class Register extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.child("Account").getChildren()) {
-                        if (snapshot.child("ID").getValue().toString().equals(id.getText().toString()))
+                        if (snapshot.child(id.getText().toString()).exists())
                             is_reuse[0] = true;
                     }
                 }
@@ -94,12 +94,11 @@ public class Register extends AppCompatActivity {
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.child("Account").getChildren()) {
-                        if (phone.getText().toString().equals(snapshot.child("phone").getValue().toString()))
-                            is_reuse[1] = true;
+                    for(DataSnapshot snapshot: dataSnapshot.child("Account").getChildren()) {
+                        if(snapshot.child("phone").equals(phone.getText().toString()))
+                            is_reuse[1]=true;
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -123,7 +122,6 @@ public class Register extends AppCompatActivity {
         else if (!tpassword.equals(tpassword_confirm))
             Toast.makeText(Register.this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
         else {
-
             Load.account = new Account(tname, tID, tphone, tpassword, 1, 0, "", "");
             create_account(Load.account);
             Toast.makeText(Register.this, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
@@ -131,30 +129,16 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    long total_account;
     private void create_account(Account account) {
         DatabaseReference ref = database.getReference();
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                total_account=dataSnapshot.child("Account").getChildrenCount();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        total_account+=2;
-        ref.child("Account").child(Long.toString(total_account)).child("name").setValue(account.name);
-        ref.child("Account").child(Long.toString(total_account)).child("ID").setValue(account.ID);
-        ref.child("Account").child(Long.toString(total_account)).child("exp").setValue(account.exp);
-        ref.child("Account").child(Long.toString(total_account)).child("fc").setValue(account.fc);
-        ref.child("Account").child(Long.toString(total_account)).child("friends_split").setValue(account.friends_split);
-        ref.child("Account").child(Long.toString(total_account)).child("level").setValue(account.level);
-        ref.child("Account").child(Long.toString(total_account)).child("password").setValue(account.password);
-        ref.child("Account").child(Long.toString(total_account)).child("phone").setValue(account.phone);
-        ref.child("Account_count").setValue(total_account);
+        ref.child("Account").child(account.ID).child("name").setValue(account.name);
+        ref.child("Account").child(account.ID).child("ID").setValue(account.ID);
+        ref.child("Account").child(account.ID).child("exp").setValue(account.exp);
+        ref.child("Account").child(account.ID).child("fc").setValue(account.fc);
+        ref.child("Account").child(account.ID).child("friends_split").setValue(account.friends_split);
+        ref.child("Account").child(account.ID).child("level").setValue(account.level);
+        ref.child("Account").child(account.ID).child("password").setValue(account.password);
+        ref.child("Account").child(account.ID).child("phone").setValue(account.phone);
 
     }
 }
