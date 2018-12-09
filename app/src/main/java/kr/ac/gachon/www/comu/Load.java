@@ -40,14 +40,15 @@ public class Load extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                move_login(account);
+                move_login();
             }
         }, 500);
     }
 
+    Intent intent;
     String ID=null;
     String password = null;
-    private void kepp_login() { //로컬에서 id와 비번을 읽어옴
+    private void move_login() { //로컬에서 id와 비번을 읽어옴
         try {
             BufferedReader br=new BufferedReader(new FileReader(new File(getFilesDir()+"logined.dat")));
             String tmp="";
@@ -58,23 +59,22 @@ public class Load extends AppCompatActivity {
                     tmp=br.readLine();
                     password=tmp;
             }
-            if((!ID.equals(null))&&(!password.equals(null))) {
+            br.close();
+            if(ID!=null&&password!=null) {
                 FirebaseDatabase db=FirebaseDatabase.getInstance();
                 DatabaseReference ref=db.getReference();
 
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot snapshot: dataSnapshot.child("Account").getChildren()) { //일치하는 계정을 찾으면 데이터 가져오기
-                            if(snapshot.child(ID).child("password").getValue().equals(password)) {
-                                String name=snapshot.child("name").getValue().toString();
-                                String phone=snapshot.child("phone").getValue().toString();
-                                int level=Integer.parseInt(snapshot.child("level").getValue().toString());
-                                int exp=Integer.parseInt(snapshot.child("exp").getValue().toString());
-                                String fc=snapshot.child("fc").getValue().toString();
-                                String friends_split=snapshot.child("friedns_split").getValue().toString();
-                                account=new Account(name, ID, phone, password, level, exp, fc, friends_split);
-                            }
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) { //일치하는 계정을 인스턴스로 생성
+                        if(dataSnapshot.child("Account").child(ID).child("password").getValue(String.class).equals(password)) {
+                            String name=dataSnapshot.child("Account").child(ID).child("name").getValue(String.class);
+                            String phone=dataSnapshot.child("Account").child(ID).child("phone").getValue(String.class);
+                            int level=dataSnapshot.child("Account").child(ID).child("level").getValue(Integer.class);
+                            int exp=dataSnapshot.child("Account").child(ID).child("exp").getValue(Integer.class);
+                            String fc=dataSnapshot.child("Account").child(ID).child("fc").getValue(String.class);
+                            String friends_split=dataSnapshot.child("Account").child(ID).child("friends_split").getValue(String.class);
+                            account=new Account(name, ID, phone, password, level, exp, fc, friends_split);
                         }
                     }
                     @Override
@@ -82,21 +82,33 @@ public class Load extends AppCompatActivity {
 
                     }
                 });
+                if(account!=null) {
+                    intent = new Intent(Load.this, Main.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    intent=new Intent(Load.this, Member.class);
+                    startActivity(intent);
+                    finish();
+                }
+            } else {
+                intent=new Intent(Load.this, Member.class);
+                startActivity(intent);
+                finish();
             }
-            br.close();
+
         } catch (FileNotFoundException e) {
+            intent=new Intent(Load.this, Member.class);
+            startActivity(intent);
+            finish();
             e.printStackTrace();
         } catch (IOException e) {
+            intent=new Intent(Load.this, Member.class);
+            startActivity(intent);
+            finish();
             e.printStackTrace();
         }
 
     }
 
-    private void move_login(Account account) { //로그인 인덱스를 받아 로그인 페이지로 이동하거나 메인 페이지로 이동
-            Intent intent;
-            if(account==null) intent=new Intent(Load.this, Member.class);
-            else intent=new Intent(Load.this, Main.class);
-            startActivity(intent);
-            finish();
-    }
 }

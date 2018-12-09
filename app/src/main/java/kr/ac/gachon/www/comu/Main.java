@@ -251,11 +251,13 @@ public class Main extends AppCompatActivity {
         File Logined=new File(getFilesDir()+"logined.dat");
         try {
             BufferedWriter bw=new BufferedWriter(new FileWriter(Logined));
+            bw.write("");
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         notice_showed=false;
+        Load.account=null;
         Intent memeber=new Intent(getApplicationContext(), Member.class);
         startActivity(memeber);
         finish();

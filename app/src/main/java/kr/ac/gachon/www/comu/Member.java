@@ -99,7 +99,7 @@ public class Member extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    if(!dataSnapshot.child("Account").child(id).exists())
+                                    if(dataSnapshot.child("Account").child(id).child("ID").getValue(String.class)==null)
                                         Toast.makeText(Member.this, "ID가 존재하지 않습니다", Toast.LENGTH_SHORT).show();
                                     else if (dataSnapshot.child("Account").child(id).child("password").getValue().toString().equals(password)) {
                                         String name = dataSnapshot.child("Account").child(id).child("name").getValue().toString();
